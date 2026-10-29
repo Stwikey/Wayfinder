@@ -5,7 +5,7 @@ public class BoatMovement : MonoBehaviour {
     public Rigidbody rb;
 
     public float acceleration = 5.0f;
-    public float deacceleration = -5.0f;
+    public float deacceleration = 5.0f;
     public float maxSpeed = 5.0f;
 
     public float rotationAcceleration = 90.0f;
@@ -43,13 +43,23 @@ public class BoatMovement : MonoBehaviour {
                     rotationSpeed = Mathf.Min(rotationSpeed + rotationDeacceleration * deltaTime, 0.0f);
                 }
             }
-            transform.rotation *= Quaternion.Euler(0, rotationSpeed * deltaTime, 0);
             speed += acceleration * deltaTime;
         }
         // otherwise deaccelerate
-        else speed = Mathf.Max(speed - deacceleration * deltaTime, 0.0f);
+        else {
+            speed = Mathf.Max(speed - deacceleration * deltaTime, 0.0f);
+            if (rotationSpeed > 0) {
+                rotationSpeed = Mathf.Max(rotationSpeed - rotationDeacceleration * deltaTime, 0.0f);
+            }
+            else if (rotationSpeed < 0) {
+                rotationSpeed = Mathf.Min(rotationSpeed + rotationDeacceleration * deltaTime, 0.0f);
+            }
+        }
 
         speed = Mathf.Min(speed, maxSpeed);
+        
         rb.linearVelocity = transform.forward * speed;
+        transform.rotation *= Quaternion.Euler(0, rotationSpeed * deltaTime, 0);
+
     }
 }
