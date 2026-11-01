@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 98bfbfccc4cf3b04d938f3e2edbe2664, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e5fcbb56ba8592a4e9c31edcbff6633e, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -453,13 +454,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.033974823, y: -0, z: -0, w: 0.99942267}
-  m_LocalPosition: {x: 0.24000001, y: 5.07, z: -30}
+  m_LocalRotation: {x: 0.06814251, y: -0.062470168, z: 0.00427522, w: 0.9957087}
+  m_LocalPosition: {x: -2.28, y: 7.58, z: -29.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1083171426}
-  m_LocalEulerAnglesHint: {x: -3.894, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 7.83, y: -7.18, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +505,27 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d378a29a35a2c148922801eda3677d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
+  followingObj: {fileID: 1083171421}
+  maxDistance: 20
+  minDistance: 10
+  distance: 12
+  zoomSpeed: 2
+  minRotationX: 0
+  maxRotationX: 50
+  rotateSpeed: 0.2
+  rotation: {x: 9, y: 0, z: 0}
 --- !u!1 &347202764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +2011,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 330585546}
   - {fileID: 574781717}
   - {fileID: 1460878543}
   m_Father: {fileID: 0}
@@ -8211,6 +8232,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 330585546}
   - {fileID: 1083171426}
   - {fileID: 733761955}
   - {fileID: 1409972077}
