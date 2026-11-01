@@ -62,7 +62,7 @@ public class BoatMovement : MonoBehaviour {
             }
         }
 
-        rb.linearVelocity = transform.forward * movementSpeed;
+        transform.position = transform.position + transform.forward * movementSpeed * deltaTime;
         transform.rotation *= Quaternion.Euler(0, rotationSpeed * deltaTime, 0);
 
     }
