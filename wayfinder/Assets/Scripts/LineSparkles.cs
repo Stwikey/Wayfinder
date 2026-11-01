@@ -12,7 +12,7 @@ public class LineSparkles : MonoBehaviour {
     public GameObject sparkles;
     public List<Vector3> points;
 
-    List<GameObject> sparklesList;
+    public List<GameObject> sparklesList;
     LineRenderer lineRenderer;
     
     
@@ -31,11 +31,16 @@ public class LineSparkles : MonoBehaviour {
             points.Add(position);
             lineRenderer.positionCount = points.Count;
             lineRenderer.SetPositions(points.ToArray());
-        } 
+        }
+        if (sparklesList.Count == 0 || (sparklesList[sparklesList.Count - 1].transform.position - position).magnitude > 0.5f) {
+            GameObject tmp = Object.Instantiate(sparkles, position, Quaternion.Euler(Vector3.zero));
+            sparklesList.Add(tmp);
+        }
     }
 
     float timePassed = 0;
     void DestroyLine() {
+        for (int i = 0; i < sparklesList.Count; i++) Destroy(sparklesList[i]);
         timePassed += Time.deltaTime;
         while (timePassed > 0.02f) {
             if (points.Count == 0) {

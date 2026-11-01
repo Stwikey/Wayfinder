@@ -5,6 +5,7 @@ public class FishingZone : MonoBehaviour {
 
     public Camera cam;
     public List<GameObject> points;
+    public List<GameObject> pointStars;
     public GameObject player;
     //public TrailRenderer trailRenderer;
     public GameObject lineRendererPrefab;
@@ -14,7 +15,7 @@ public class FishingZone : MonoBehaviour {
     //List<GameObject> sparklesList;
 
     int idx = 0;
-    int onIdx = 0;
+    int onIdx = -1;
 
     void Start() {
         //sparklesList = new List<GameObject>();
@@ -42,18 +43,28 @@ public class FishingZone : MonoBehaviour {
                 if (rightmouseDown) {
                     currentLine = Object.Instantiate(lineRendererPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
                 }
-                    //TrailOn(hitpos);
                 else {
-                    // if ((hitpos - lastPos).magnitude > 0.05f) {
-                    //     GameObject obj = Object.Instantiate(sparkles, hitpos, Quaternion.Euler(Vector3.zero));
-                    //     sparklesList.Add(obj);
-                    // }
 
                     lastPos = hitpos;
                     currentLine.GetComponent<LineSparkles>().AddPoint(hitpos);
 
-                    // moving trailRenderer
-                   // trailRenderer.transform.position = hitpos;
+                    // updating stars
+                    Debug.Log(idx);
+                    if (idx != 0) {
+                        List<GameObject> p = currentLine.GetComponent<LineSparkles>().sparklesList;
+                        if (idx >= 1) {
+                            pointStars[0].transform.position = p[p.Count - 1].transform.position;
+                        }
+                        if (idx >= 2) {
+                            pointStars[1].transform.position = p[p.Count - 2].transform.position;
+                        }
+                        
+                    }
+                    else {
+                        for (int i = 0; i < points.Count; i++) {
+                            pointStars[i].transform.position = points[i].transform.position;
+                        }
+                    }
                 }
 
                 if (onIdx != -1) {
@@ -67,12 +78,10 @@ public class FishingZone : MonoBehaviour {
                     if (hit.collider.gameObject == points[i]) {
                         if (i == idx) {
                             onIdx = idx;
-                            //if (idx == points.Count - 1) Debug.Log("ok maam");
                         }
                         else {
-                            //Debug.Log(i);
-                            //TrailOff();
                             idx = 0;
+                            onIdx = -1;
                         }
                     }
                 }
