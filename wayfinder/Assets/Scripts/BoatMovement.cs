@@ -18,36 +18,42 @@ public class BoatMovement : MonoBehaviour {
     }
 
     float rotationSpeed = 0.0f;
+    float movementSpeed = 0.0f;
     // Update is called once per frame
     void Update() {
 
         float deltaTime = Time.deltaTime;
 
-        // accelerate
-        float speed = Mathf.Max(rb.linearVelocity.magnitude);
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
-            // turning
-            bool turnRight = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D));
-            bool turnLeft = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A));
-            if (turnRight && rotationSpeed >= 0.0f) {
-                rotationSpeed = Mathf.Min(maxRotationSpeed, rotationSpeed + rotationAcceleration * deltaTime);
-            }
-            else if (turnLeft && rotationSpeed <= 0.0f) {
-                rotationSpeed = Mathf.Max(-maxRotationSpeed, rotationSpeed - rotationAcceleration * deltaTime);
-            }
-            else if (!turnLeft && !turnRight) {
-                if (rotationSpeed > 0) {
-                    rotationSpeed = Mathf.Max(rotationSpeed - rotationDeacceleration * deltaTime, 0.0f);
-                }
-                else if (rotationSpeed < 0) {
-                    rotationSpeed = Mathf.Min(rotationSpeed + rotationDeacceleration * deltaTime, 0.0f);
-                }
-            }
-            speed += acceleration * deltaTime;
+        bool moveForward = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W));
+        bool moveBackward = (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S));
+        bool turnRight = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D));
+        bool turnLeft = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A));
+
+        // moving forwards / backwards
+        if (moveForward && movementSpeed >= 0.0f) {
+            movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * deltaTime);
         }
-        // otherwise deaccelerate
+        else if (moveBackward && movementSpeed <= 0.0f) {
+            movementSpeed = Mathf.Max(-maxSpeed, movementSpeed - acceleration * deltaTime);
+        }
+        // deaccelerating
         else {
-            speed = Mathf.Max(speed - deacceleration * deltaTime, 0.0f);
+            if (movementSpeed > 0) {
+                movementSpeed = Mathf.Max(movementSpeed - acceleration * deltaTime, 0.0f);
+            }
+            else if (movementSpeed < 0) {
+                movementSpeed = Mathf.Min(movementSpeed + acceleration * deltaTime, 0.0f);
+            }
+        }
+
+        // turning
+        if ((moveForward || moveBackward) && turnRight && rotationSpeed >= 0.0f) {
+            rotationSpeed = Mathf.Min(maxRotationSpeed, rotationSpeed + rotationAcceleration * deltaTime);
+        }
+        else if ((moveForward || moveBackward) && turnLeft && rotationSpeed <= 0.0f) {
+            rotationSpeed = Mathf.Max(-maxRotationSpeed, rotationSpeed - rotationAcceleration * deltaTime);
+        }
+        else {
             if (rotationSpeed > 0) {
                 rotationSpeed = Mathf.Max(rotationSpeed - rotationDeacceleration * deltaTime, 0.0f);
             }
@@ -56,9 +62,7 @@ public class BoatMovement : MonoBehaviour {
             }
         }
 
-        speed = Mathf.Min(speed, maxSpeed);
-        
-        rb.linearVelocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * movementSpeed;
         transform.rotation *= Quaternion.Euler(0, rotationSpeed * deltaTime, 0);
 
     }
