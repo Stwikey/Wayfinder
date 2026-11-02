@@ -22,6 +22,8 @@ public class BoatMovement : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        if (GameManager.gameState != GameState.Movement) return;
+
         float deltaTime = Time.deltaTime;
 
         bool moveForward = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W));

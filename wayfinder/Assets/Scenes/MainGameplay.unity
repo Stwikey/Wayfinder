@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: e5fcbb56ba8592a4e9c31edcbff6633e, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5767812a6dd92a242b153b750c8da929, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: eae6ba8ab8ffeee479df3e30b1b92d12, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -226,7 +226,7 @@ Transform:
   m_GameObject: {fileID: 137546980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.14, y: 0, z: -1.88}
+  m_LocalPosition: {x: 0.14, y: 0.1, z: -1.88}
   m_LocalScale: {x: 1.9968475, y: 0.0001, z: 1.9968475}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -320,7 +320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &257519760
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &330585544
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1410,11 +1410,11 @@ GameObject:
   - component: {fileID: 746405660}
   m_Layer: 0
   m_Name: totalarea
-  m_TagString: Untagged
+  m_TagString: FishingZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &746405656
 Transform:
   m_ObjectHideFlags: 0
@@ -1437,7 +1437,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746405655}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1664,7 +1664,7 @@ Transform:
   m_GameObject: {fileID: 887312008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.46, y: 0, z: 1.99}
+  m_LocalPosition: {x: 3.46, y: 0.1, z: 1.99}
   m_LocalScale: {x: 1.9968475, y: 0.0001, z: 1.9968475}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1973,6 +1973,7 @@ GameObject:
   - component: {fileID: 1083171423}
   - component: {fileID: 1083171422}
   - component: {fileID: 1083171427}
+  - component: {fileID: 1083171428}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2121,6 +2122,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1083171428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083171421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19043d7f7f2d8ec4695c2de2719cdd85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGameplay
+  cam: {fileID: 330585545}
 --- !u!1 &1189225793
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,7 +2959,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7194806065bbbfd40a14fd62eb6f1d83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2986,8 +3000,8 @@ Transform:
   m_GameObject: {fileID: 1695371703}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.54, y: 0, z: 1.86}
-  m_LocalScale: {x: 1.9968475, y: 0.0001, z: 1.9968475}
+  m_LocalPosition: {x: -45.8, y: 0.1, z: -9.5}
+  m_LocalScale: {x: 5, y: 0.0001, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1595922981}
@@ -3303,7 +3317,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017062717}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
