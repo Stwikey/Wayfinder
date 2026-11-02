@@ -12,7 +12,7 @@ public class PlayerGameplay : MonoBehaviour {
     void Update() {
         Vector3 mousePos = Input.mousePosition;
         bool rightmouseDown = Input.GetMouseButtonDown(1);
-
+    
         if (GameManager.gameState == GameState.Movement && rightmouseDown) {
             Ray ray = cam.ScreenPointToRay(mousePos);
             RaycastHit[] rayHits = Physics.RaycastAll(ray);
