@@ -28,11 +28,11 @@ public class CameraMovement : MonoBehaviour {
         Vector3 mouseDeltaRaw = Input.mousePositionDelta;
         Vector3 mouseDelta = new Vector3(-mouseDeltaRaw.y, mouseDeltaRaw.x, 0.0f);
 
-        distance += -mouseScroll * zoomSpeed;
-        distance = Mathf.Max(Mathf.Min(distance, maxDistance), minDistance);
+        // distance += -mouseScroll * zoomSpeed;
+        // distance = Mathf.Max(Mathf.Min(distance, maxDistance), minDistance);
 
-        rotation = rotation + new Vector3(mouseDelta.x * rotateSpeed, mouseDelta.y * rotateSpeed, 0);
-        rotation = new Vector3(Mathf.Max(Mathf.Min(rotation.x, maxRotationX), minRotationX), rotation.y, rotation.z);
+        // rotation = rotation + new Vector3(mouseDelta.x * rotateSpeed, mouseDelta.y * rotateSpeed, 0);
+        // rotation = new Vector3(Mathf.Max(Mathf.Min(rotation.x, maxRotationX), minRotationX), rotation.y, rotation.z);
     }
 
     // move camera to the correct place to track what it is following
