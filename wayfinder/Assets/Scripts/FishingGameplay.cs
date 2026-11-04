@@ -24,16 +24,19 @@ public class FishingGameplay : MonoBehaviour {
         return _instance;
     }
 
-    public GameObject lineRendererPrefab;
+    public GameObject fishingDrawLinePrefab;
+    public FishingLine fishingLine;
 
     public float fishingRange = 5.0f;
 
     public FishingType fishingType;
 
+    public Animator animator;
+
     GameObject currentLine;
     bool isFishing = false;
     GameObject fishingZone;
-
+    
     void Start() {
 
     }
@@ -47,9 +50,14 @@ public class FishingGameplay : MonoBehaviour {
         bool rightmouseDown = Input.GetMouseButtonDown(1);
         bool rightmouseUp = Input.GetMouseButtonUp(1);
 
+
         // stopping fishing
-        if (rightmouseUp || !rightMouse) {
+        if (rightmouseUp) {
             StopFishing();
+            return;
+        }
+
+        if (!rightmouseDown && !isFishing) {
             return;
         }
 
@@ -106,6 +114,7 @@ public class FishingGameplay : MonoBehaviour {
 
             // updating the points
             fishDrawing.AddPoint(hitpos);
+            fishingLine.UpdateEndpoint(hitpos);
 
             // adding the object to linerenderer
             if (hitFish != null) {
@@ -118,15 +127,19 @@ public class FishingGameplay : MonoBehaviour {
     }
 
     public void StopFishing() {
+        if (isFishing) animator.SetTrigger("Catch Rod");
         isFishing = false;
+        fishingLine.UpdateFishingState(FishingLineState.Back);
         if (currentLine != null) {
             currentLine.GetComponent<FishDrawing>().lineState = LineState.Destroy;
-            fishingZone.GetComponent<FishingZone>()?.FinishedTrail();
+            if (fishingType == FishingType.Zone) fishingZone.GetComponent<FishingZone>()?.FinishedTrail();
         }
     }
 
     void StartFishing() {
+        animator.SetTrigger("Cast Rod");
+        fishingLine.UpdateFishingState(FishingLineState.Cast);
         isFishing = true;
-        currentLine = Object.Instantiate(lineRendererPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
+        currentLine = Object.Instantiate(fishingDrawLinePrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
     }
 }
