@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - FishingZone
+  - SmallFish
+  - PuzzleFish
+  - Water
   layers:
   - Default
   - TransparentFX

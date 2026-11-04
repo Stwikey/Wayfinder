@@ -6,7 +6,7 @@ public enum LineState {
     Destroy
 };
 
-public class LineSparkles : MonoBehaviour {
+public class FishDrawing : MonoBehaviour {
 
     public LineState lineState;
     public GameObject sparkles;
@@ -14,16 +14,38 @@ public class LineSparkles : MonoBehaviour {
 
     public List<GameObject> sparklesList;
     LineRenderer lineRenderer;
+
+    List<GameObject> fishes;
+    List<int> fishIdx;
     
-    
-    void Start() {
+    void Awake() {
         lineRenderer = GetComponent<LineRenderer>();
         sparklesList = new List<GameObject>();
+        fishes = new List<GameObject>();
+        fishIdx = new List<int>();
+
+        fishes.Add(null);
+        fishIdx.Add(0);
     }
 
     // Update is called once per frame
     void Update() {
-        if (lineState == LineState.Destroy) DestroyLine();
+        if (lineState == LineState.Destroy) {
+            DestroyLine();
+            return;
+        }
+        // moving up the fish if they are at least 10 away
+        fishIdx[0] = points.Count;
+        for (int i = 1; i < fishIdx.Count; i++) {
+            if (fishIdx[i - 1] - fishIdx[i] >= 10) {
+                fishIdx[i]++;
+                fishes[i].transform.position = points[fishIdx[i]];
+            }
+            if (fishIdx[i - 1] - fishIdx[i] >= 20) {
+                fishIdx[i]++;
+                fishes[i].transform.position = points[fishIdx[i]];
+            }
+        }
     }
 
     public void AddPoint(Vector3 position) {
@@ -36,6 +58,12 @@ public class LineSparkles : MonoBehaviour {
             GameObject tmp = Object.Instantiate(sparkles, position, Quaternion.Euler(Vector3.zero));
             sparklesList.Add(tmp);
         }
+    }
+
+    public void AddFish(GameObject fish) {
+        // this would be the spot
+        fishes.Add(fish.GetComponent<FishingSpot>().star);
+        fishIdx.Add(points.Count);
     }
 
     float timePassed = 0;

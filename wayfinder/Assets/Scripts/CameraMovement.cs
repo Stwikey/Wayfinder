@@ -20,7 +20,8 @@ public class CameraMovement : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        
+        distance = (transform.position - followingObj.transform.position).magnitude;
+        rotation = transform.rotation.eulerAngles;
     }
 
     void Update() {

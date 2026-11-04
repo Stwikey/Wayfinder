@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class BoatMovement : MonoBehaviour {
 
-    public Rigidbody rb;
-
     public float acceleration = 5.0f;
     public float deacceleration = 5.0f;
     public float maxSpeed = 5.0f;
