@@ -22,6 +22,11 @@ public class FishingZone : MonoBehaviour {
             }
             idx = 0;
         }
+        else {
+            for (int i = 0; i < points.Count; i++) {
+                points[i].GetComponent<FishingSpot>().Collect();
+            }
+        }
     }
 
     public void CaughtFish(GameObject hitFish) {
