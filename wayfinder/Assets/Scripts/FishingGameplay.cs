@@ -71,6 +71,7 @@ public class FishingGameplay : MonoBehaviour {
         // if we hit something that is not a fish
         for (int i = 0; i < rayHits.Length; i++) {
             if (rayHits[i].collider.tag != "FishingZone" && rayHits[i].collider.tag != "SmallFish" && rayHits[i].collider.tag != "PuzzleFish" && rayHits[i].collider.tag != "Water") {
+                Debug.Log(rayHits[i].collider.tag);
                 StopFishing();
                 return;
             }
