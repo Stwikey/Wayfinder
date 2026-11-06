@@ -24,16 +24,19 @@ public class FishDrawing : MonoBehaviour {
         fishes = new List<GameObject>();
         fishIdx = new List<int>();
 
+        // first item of fishes is always null to leave a space between mouse and other stars
         fishes.Add(null);
         fishIdx.Add(0);
     }
 
     // Update is called once per frame
     void Update() {
+        
         if (lineState == LineState.Destroy) {
             DestroyLine();
             return;
         }
+
         // moving up the fish if they are at least 10 away
         fishIdx[0] = points.Count;
         for (int i = 1; i < fishIdx.Count; i++) {
@@ -74,9 +77,6 @@ public class FishDrawing : MonoBehaviour {
             if (points.Count == 0) {
                 break;
             }
-            // if (sparklesList.size() != 0) {
-            //     while (points)
-            // }
             points.RemoveAt(0);
             lineRenderer.positionCount = points.Count;
             lineRenderer.SetPositions(points.ToArray());
@@ -85,6 +85,12 @@ public class FishDrawing : MonoBehaviour {
         }
         if (points.Count == 0) {
             Destroy(gameObject);
+        }
+    }
+
+    public void CollectFishes() {
+        for (int i = 1; i < fishes.Count; i++) {
+            fishes[i].transform.parent.gameObject.GetComponent<FishingSpot>().Collect();
         }
     }
 

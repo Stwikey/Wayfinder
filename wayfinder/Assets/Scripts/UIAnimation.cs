@@ -20,7 +20,7 @@ public class UIAnimation : MonoBehaviour {
         public int spriteIdx; // if animationstep is changesprite
     };
 
-    public List<Sprite> sprites;
+    public List<GameObject> sprites;
 
     public List<UIAnimationInstruction> instructions;
 
@@ -47,7 +47,8 @@ public class UIAnimation : MonoBehaviour {
                 break;
             }
             case UIAnimationStep.ChangeSprite: {
-                GetComponent<Image>().sprite = sprites[curInstruction.spriteIdx];
+                for (int i = 0; i < sprites.Count; i++) sprites[i].SetActive(false);
+                sprites[curInstruction.spriteIdx].SetActive(true);
                 nextInstruction = true;
                 break;
             }

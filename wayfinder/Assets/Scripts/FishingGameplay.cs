@@ -25,20 +25,24 @@ public class FishingGameplay : MonoBehaviour {
     }
 
     public GameObject fishingDrawLinePrefab;
-    public FishingLine fishingLine;
+    public GameObject fishingLinePrefab;
+
+    public GameObject fishingTip;
 
     public float fishingRange = 5.0f;
 
     public FishingType fishingType;
 
     public Animator animator;
-
     GameObject currentLine;
     bool isFishing = false;
     GameObject fishingZone;
+    FishingLine fishingLine;
     
     void Start() {
-
+        GameObject obj = Object.Instantiate(fishingLinePrefab, Vector3.zero, Quaternion.Euler(0, 0, 0));
+        fishingLine = obj.GetComponent<FishingLine>();
+        fishingLine.startPoint = fishingTip;
     }
 
     void Update() {
@@ -67,6 +71,7 @@ public class FishingGameplay : MonoBehaviour {
         // if we hit something that is not a fish
         for (int i = 0; i < rayHits.Length; i++) {
             if (rayHits[i].collider.tag != "FishingZone" && rayHits[i].collider.tag != "SmallFish" && rayHits[i].collider.tag != "PuzzleFish" && rayHits[i].collider.tag != "Water") {
+                Debug.Log(rayHits[i].collider.tag);
                 StopFishing();
                 return;
             }
@@ -118,10 +123,11 @@ public class FishingGameplay : MonoBehaviour {
 
             // adding the object to linerenderer
             if (hitFish != null) {
+                //AudioManager.I().PlaySFX(AudioType.Star1);
                 fishDrawing.AddFish(hitFish);
                 hitFish.GetComponent<FishingSpot>().Caught();
                 // updating the fishingZone if there is one
-                fishingZone.GetComponent<FishingZone>()?.CaughtFish(hitFish);
+                fishingZone?.GetComponent<FishingZone>()?.CaughtFish(hitFish);
             }
         } 
     }
@@ -133,6 +139,9 @@ public class FishingGameplay : MonoBehaviour {
         if (currentLine != null) {
             currentLine.GetComponent<FishDrawing>().lineState = LineState.Destroy;
             if (fishingType == FishingType.Zone) fishingZone.GetComponent<FishingZone>()?.FinishedTrail();
+            else {
+                currentLine.GetComponent<FishDrawing>().CollectFishes();
+            }
         }
     }
 

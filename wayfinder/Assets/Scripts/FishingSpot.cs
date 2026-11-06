@@ -19,4 +19,8 @@ public class FishingSpot : MonoBehaviour {
     public void Caught() {
         ripple.SetActive(false);
     }
+    
+    public void Collect() {
+        star.SetActive(false);
+    }
 }
