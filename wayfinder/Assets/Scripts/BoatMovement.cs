@@ -47,10 +47,10 @@ public class BoatMovement : MonoBehaviour {
         }
 
         // turning
-        if (turnRight && rotationSpeed >= 0.0f) {
+        if ((turnRight && rotationSpeed >= 0.0f && !moveBackward) || (turnLeft && rotationSpeed >= 0.0f && moveBackward)) {
             rotationSpeed = Mathf.Min(maxRotationSpeed, rotationSpeed + rotationAcceleration * deltaTime);
         }
-        else if (turnLeft && rotationSpeed <= 0.0f) {
+        else if ((turnLeft && rotationSpeed <= 0.0f && !moveBackward) || (turnRight && rotationSpeed <= 0.0f && moveBackward)) {
             rotationSpeed = Mathf.Max(-maxRotationSpeed, rotationSpeed - rotationAcceleration * deltaTime);
         }
         else {
