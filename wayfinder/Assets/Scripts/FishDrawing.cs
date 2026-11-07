@@ -73,14 +73,14 @@ public class FishDrawing : MonoBehaviour {
     void DestroyLine() {
         for (int i = 0; i < sparklesList.Count; i++) Destroy(sparklesList[i]);
         timePassed += Time.deltaTime;
-        while (timePassed > 0.02f) {
+        while (timePassed > 0.005f) {
             if (points.Count == 0) {
                 break;
             }
             points.RemoveAt(0);
             lineRenderer.positionCount = points.Count;
             lineRenderer.SetPositions(points.ToArray());
-            timePassed -= 0.02f;
+            timePassed -= 0.005f;
             
         }
         if (points.Count == 0) {

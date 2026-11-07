@@ -88,6 +88,8 @@ public class StoryManager : MonoBehaviour {
     public GameObject ReachThirdRune;
     public GameObject Constellation4;
 
+    public GameObject Compass;
+
     public StoryStep currentStoryStep;
 
     CameraMovement cam;
@@ -120,6 +122,7 @@ public class StoryManager : MonoBehaviour {
                 UpdateStoryStep(StoryStep.WASDMovement);
             }
         }
+        
 
         if (currentStoryStep == StoryStep.WASDMovement) {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow)) UpdateStoryStep(StoryStep.ReachFishing);
@@ -233,7 +236,10 @@ public class StoryManager : MonoBehaviour {
             cam.StartPanning();
         }
 
-        if (storyStep == StoryStep.ZoomCamera) ZoomUI.SetActive(true);
+        if (storyStep == StoryStep.ZoomCamera) {
+            ZoomUI.SetActive(true);
+            Compass.SetActive(true);
+        }
         else ZoomUI.SetActive(false);
 
         if (storyStep == StoryStep.WASDMovement) WASDMovementUI.SetActive(true);

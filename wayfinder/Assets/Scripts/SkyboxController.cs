@@ -20,7 +20,14 @@ public class SkyboxController : MonoBehaviour {
     }
 
     // Update is called once per frame
+    float elapsedTime = 0;
     void Update() {
+        // float deltaTime = Time.deltaTime;
+        // elapsedTime += deltaTime;
+        // if (elapsedTime < 1.0f) return;
+
+        // elapsedTime = 0.0f;
+        
         float zPos = transform.position.z;
         if (zPos < skyboxDarkEnd) {
             material.SetTexture("_Texture1", skyboxDark);

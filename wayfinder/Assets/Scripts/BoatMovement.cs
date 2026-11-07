@@ -33,6 +33,7 @@ public class BoatMovement : MonoBehaviour {
 
     void FixedUpdate() {
         if (GameManager.gameState != GameState.Movement && GameManager.gameState != GameState.Fishing) return;
+        if (Camera.main.GetComponent<CameraMovement>().cameraState == CameraState.Panning) return;
 
         float deltaTime = Time.deltaTime;
 

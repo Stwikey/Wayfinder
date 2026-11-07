@@ -197,6 +197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishingSpot
   ripple: {fileID: 6997300770972963982}
   star: {fileID: 832983654050008360}
+  collected: 0
+  numPoints: 1
 --- !u!1001 &1184036968170582815
 PrefabInstance:
   m_ObjectHideFlags: 0

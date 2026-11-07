@@ -9,6 +9,8 @@ public class FishingSpot : MonoBehaviour {
 
     public bool collected = false;
 
+    public int numPoints = 0;
+
     void Start() {
         starPosition = star.transform.position;
     }
@@ -25,5 +27,6 @@ public class FishingSpot : MonoBehaviour {
     public void Collect() {
         star.SetActive(false);
         collected = true;
+        Compass.CurrentPoints += numPoints;
     }
 }

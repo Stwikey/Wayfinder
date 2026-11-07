@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishingSpot
   ripple: {fileID: 642884134236945806}
   star: {fileID: 3340480886499547302}
+  collected: 0
+  numPoints: 5
 --- !u!1 &3340480886499547302
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,7 +101,7 @@ public class CameraMovement : MonoBehaviour {
             transform.rotation = Quaternion.Euler(Vector3.Lerp(originalRotation, newRotation, fraction));
 
             // start waiting
-            if (fraction >= 0.999f) {
+            if (fraction >= 0.999999f) {
                 panningElapsedTime = 0;
                 panning = false;
             }

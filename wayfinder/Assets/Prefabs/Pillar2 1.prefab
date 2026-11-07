@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8764682688406106394}
   - component: {fileID: 4767227126885616912}
   - component: {fileID: 1122715742594711053}
+  - component: {fileID: 3867472054115669349}
   m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
@@ -90,6 +91,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3867472054115669349
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392839194669001367}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1789432, y: 2.178943, z: 6.4257417}
+  m_Center: {x: 0.0000038146973, y: 6.957759e-14, z: 9.792174}
 --- !u!1 &6782292193946720654
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +156,7 @@ GameObject:
   - component: {fileID: 5213002115580455453}
   - component: {fileID: 5384360174614199602}
   - component: {fileID: 1486096680514548994}
+  - component: {fileID: 8338810632412778438}
   m_Layer: 0
   m_Name: Cube.002
   m_TagString: Untagged
@@ -213,3 +236,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8338810632412778438
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865371505620866325}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2001946, y: 2.2001944, z: 7.4879823}
+  m_Center: {x: 0.0000038146973, y: 1.8954261e-14, z: 2.667575}
