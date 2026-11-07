@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7535671043699150607}
   - component: {fileID: 4160444659014090393}
   - component: {fileID: 1175327837682853249}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Ripples
   m_TagString: Untagged
   m_Icon: {fileID: 0}

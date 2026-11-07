@@ -7,6 +7,9 @@ public class FishingZone : MonoBehaviour {
     
     List<GameObject> currentOrder;
 
+    public GameObject Rune;
+    public Material GlowingMaterial;
+
     void Start() {
         currentOrder = new List<GameObject>();
     }
@@ -30,6 +33,13 @@ public class FishingZone : MonoBehaviour {
                 points[i].GetComponent<FishingSpot>().Reset();
             }
         }
+
+        if (completed) {
+            var mats = Rune.GetComponent<MeshRenderer>().materials;
+            mats[2] = GlowingMaterial;
+            Rune.GetComponent<MeshRenderer>().materials = mats;
+        }
+
         currentOrder = new List<GameObject>();
     }
 

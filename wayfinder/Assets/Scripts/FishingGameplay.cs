@@ -112,7 +112,9 @@ public class FishingGameplay : MonoBehaviour {
         // if out of range just don't update
         if (distance > fishingRange) {
             if (leftmouseDown) return;
-            hitpos = new Vector3(hitpos.x * (fishingRange / distance), hitpos.y, hitpos.z * (fishingRange / distance));
+            Vector3 newAdd = new Vector3(hitpos.x - transform.position.x, 0, hitpos.z - transform.position.z);
+
+            hitpos = new Vector3(newAdd.x / distance * fishingRange, hitpos.y, newAdd.z / distance * fishingRange) + new Vector3(transform.position.x, 0, transform.position.z);
         }
 
         // start fishing
