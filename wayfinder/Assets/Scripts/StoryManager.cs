@@ -16,14 +16,19 @@ public enum StoryStep {
     FishingWASDMove,
     ReachFirstRune,
     Puzzle1,
+    Catch2,
     AfterConstellation2,
     ReachSecondRune,
     Puzzle5,
+    Catch3,
     AfterConstellation3,
     ReachThirdRune,
     Puzzle9,
+    Catch4,
     AfterConstellation4,
-    DoorOpen,
+    ReachDoor,
+    ReachCompass,
+    Finished
 };
 
 public class StoryManager : MonoBehaviour {
@@ -67,7 +72,6 @@ public class StoryManager : MonoBehaviour {
 
     public GameObject FishingEnterUI;
     public GameObject FishingUI;
-    public GameObject FishingWASDUI;
 
     public GameObject Catch1;
     public GameObject Constellation1;
@@ -78,21 +82,33 @@ public class StoryManager : MonoBehaviour {
     public GameObject FishingWASDFishUI;
 
     public GameObject ReachFirstRune;
+    public GameObject Catch2;
     public GameObject Constellation2;
+    public GameObject Barrier2;
     public GameObject Tinystars2;
 
     public GameObject ReachSecondRune;
+    public GameObject Catch3;
     public GameObject Constellation3;
+    public GameObject Barrier3;
     public GameObject Tinystars3;
     
     public GameObject ReachThirdRune;
+    public GameObject Catch4;
     public GameObject Constellation4;
+
+    public GameObject ReachDoor;
+
+    public Animator doorAnimator;
+    
+    public GameObject ReachCompass;
 
     public GameObject Compass;
 
     public StoryStep currentStoryStep;
 
     CameraMovement cam;
+
 
     void Start() {
         cam = Camera.main.GetComponent<CameraMovement>();
@@ -113,15 +129,15 @@ public class StoryManager : MonoBehaviour {
 
         if (currentStoryStep == StoryStep.StartGamePanCamera) {
             if (cam.cameraState != CameraState.Panning) {
-                UpdateStoryStep(StoryStep.ZoomCamera);
-            }
-        }
-
-        if (currentStoryStep == StoryStep.ZoomCamera) {
-            if (Mathf.Abs(Input.mouseScrollDelta.y) > 0.1f) {
                 UpdateStoryStep(StoryStep.WASDMovement);
             }
         }
+
+        // if (currentStoryStep == StoryStep.ZoomCamera) {
+        //     if (Mathf.Abs(Input.mouseScrollDelta.y) > 0.1f) {
+        //         UpdateStoryStep(StoryStep.WASDMovement);
+        //     }
+        // }
         
 
         if (currentStoryStep == StoryStep.WASDMovement) {
@@ -161,7 +177,7 @@ public class StoryManager : MonoBehaviour {
         if (currentStoryStep == StoryStep.FishingWASDMove) {
             if (GameManager.gameState != GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDEnter);
             if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
-            if (FishingGameplay.I().isFishing && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow)) {
+            if (FishingGameplay.I().isFishing && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow))) {
                 UpdateStoryStep(StoryStep.ReachFirstRune);
             }
         }
@@ -172,8 +188,12 @@ public class StoryManager : MonoBehaviour {
 
         if (currentStoryStep == StoryStep.Puzzle1) {
             if (puzzleCount == 1) {
-                UpdateStoryStep(StoryStep.AfterConstellation2);
+                UpdateStoryStep(StoryStep.Catch2);
             }
+        }
+
+        if (currentStoryStep == StoryStep.Catch2) {
+            if (Catch2.GetComponent<FishingSpot>().collected) UpdateStoryStep(StoryStep.AfterConstellation2);
         }
 
         if (currentStoryStep == StoryStep.AfterConstellation2) {
@@ -188,8 +208,12 @@ public class StoryManager : MonoBehaviour {
 
         if (currentStoryStep == StoryStep.Puzzle5) {
             if (puzzleCount == 5) {
-                UpdateStoryStep(StoryStep.AfterConstellation3);
+                UpdateStoryStep(StoryStep.Catch3);
             }
+        }
+
+        if (currentStoryStep == StoryStep.Catch3) {
+            if (Catch3.GetComponent<FishingSpot>().collected) UpdateStoryStep(StoryStep.AfterConstellation3);
         }
 
         if (currentStoryStep == StoryStep.AfterConstellation3) {
@@ -204,14 +228,29 @@ public class StoryManager : MonoBehaviour {
 
         if (currentStoryStep == StoryStep.Puzzle9) {
             if (puzzleCount == 9) {
-                UpdateStoryStep(StoryStep.AfterConstellation4);
+                UpdateStoryStep(StoryStep.Catch4);
+            }
+        }
+        
+        if (currentStoryStep == StoryStep.Catch4) {
+            if (Catch4.GetComponent<FishingSpot>().collected) UpdateStoryStep(StoryStep.AfterConstellation4);
+        }
+
+        if (currentStoryStep == StoryStep.AfterConstellation4) {
+            if (cam.cameraState != CameraState.Panning) {
+                UpdateStoryStep(StoryStep.ReachDoor);
             }
         }
 
-        if (currentStoryStep == StoryStep.AfterConstellation3) {
-            if (cam.cameraState != CameraState.Panning) {
-                UpdateStoryStep(StoryStep.DoorOpen);
+        if (currentStoryStep == StoryStep.ReachDoor) {
+            if (ReachDoor.GetComponent<InteractionCheckpoint>().interacted) {
+                doorAnimator.SetTrigger("Open Door");
+                UpdateStoryStep(StoryStep.ReachCompass);
             }
+        }
+
+        if (currentStoryStep == StoryStep.ReachCompass) {
+            if (ReachCompass.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Finished);
         }
     }
 
@@ -254,7 +293,7 @@ public class StoryManager : MonoBehaviour {
         if (storyStep == StoryStep.AfterConstellation1) {
             Tinystars1.SetActive(true);
             Barrier1.SetActive(false);
-            Constellation1.SetActive(true);
+            Constellation1.GetComponent<FadeIn>().fadingIn = true;
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation1Cam.transform.position, Constellation1Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(TinyStars1Cam.transform.position, TinyStars1Cam.transform.rotation.eulerAngles, 2, 2));
@@ -275,9 +314,18 @@ public class StoryManager : MonoBehaviour {
             cam.StartPanning();
         }
 
+        if (storyStep == StoryStep.Catch2) {
+            Catch2.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation2Cam.transform.position, Constellation2Cam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
         if (storyStep == StoryStep.AfterConstellation2) {
             Tinystars2.SetActive(true);
-            Constellation2.SetActive(true);
+            Barrier2.SetActive(false);
+            Constellation2.GetComponent<FadeIn>().fadingIn = true;
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation2Cam.transform.position, Constellation2Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(TinyStars2Cam.transform.position, TinyStars2Cam.transform.rotation.eulerAngles, 2, 2));
@@ -285,17 +333,34 @@ public class StoryManager : MonoBehaviour {
             cam.StartPanning();
         }
 
-        if (storyStep == StoryStep.AfterConstellation3) {
-            Tinystars3.SetActive(true);
-            Constellation3.SetActive(true);
+        if (storyStep == StoryStep.Catch3) {
+            Catch3.SetActive(true);
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation3Cam.transform.position, Constellation3Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
         }
 
+        if (storyStep == StoryStep.AfterConstellation3) {
+            Tinystars3.SetActive(true);
+            Barrier3.SetActive(false);
+            Constellation3.GetComponent<FadeIn>().fadingIn = true;
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation3Cam.transform.position, Constellation3Cam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.Catch4) {
+            Catch4.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
         if (storyStep == StoryStep.AfterConstellation4) {
-            Constellation4.SetActive(true);
+            Constellation4.GetComponent<FadeIn>().fadingIn = true;
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
