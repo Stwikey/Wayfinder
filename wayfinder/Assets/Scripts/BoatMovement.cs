@@ -10,17 +10,29 @@ public class BoatMovement : MonoBehaviour {
     public float rotationDeacceleration = 180.0f;
     public float maxRotationSpeed = 90.0f;
 
+    Rigidbody rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        
+        rb = GetComponent<Rigidbody>();
+
+        // converting rotation to rads
+        rotationAcceleration = rotationAcceleration / 180 * Mathf.PI;
+        rotationDeacceleration = rotationDeacceleration / 180 * Mathf.PI;
+        maxRotationSpeed = maxRotationSpeed / 180 * Mathf.PI;
     }
 
-    float rotationSpeed = 0.0f;
-    float movementSpeed = 0.0f;
+    
     // Update is called once per frame
     void Update() {
 
-        if (GameManager.gameState != GameState.Movement) return;
+    }
+
+    float prevRotationSpeed = 0.0f;
+    float prevMovementSpeed = 0.0f;
+
+    void FixedUpdate() {
+        if (GameManager.gameState != GameState.Movement && GameManager.gameState != GameState.Fishing) return;
 
         float deltaTime = Time.deltaTime;
 
@@ -29,12 +41,25 @@ public class BoatMovement : MonoBehaviour {
         bool turnRight = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D));
         bool turnLeft = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A));
 
+        float curMaxSpeed = maxSpeed;
+        float curAcceleration = acceleration;
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            curMaxSpeed = maxSpeed * 2;
+            curAcceleration = acceleration * 2;
+        }
+
+        float movementSpeed = rb.linearVelocity.magnitude;
+        float rotationSpeed = rb.angularVelocity.magnitude;
+
+        if (prevMovementSpeed < 0.0f) movementSpeed = -movementSpeed;
+        if (prevRotationSpeed < 0.0f) rotationSpeed = -rotationSpeed;
+
         // moving forwards / backwards
         if (moveForward && movementSpeed >= 0.0f) {
-            movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * deltaTime);
+            movementSpeed = Mathf.Min(curMaxSpeed, movementSpeed + curAcceleration * deltaTime);
         }
         else if (moveBackward && movementSpeed <= 0.0f) {
-            movementSpeed = Mathf.Max(-maxSpeed, movementSpeed - acceleration * deltaTime);
+            movementSpeed = Mathf.Max(-curMaxSpeed, movementSpeed - curAcceleration * deltaTime);
         }
         // deaccelerating
         else {
@@ -62,8 +87,11 @@ public class BoatMovement : MonoBehaviour {
             }
         }
 
-        transform.position = transform.position + transform.forward * movementSpeed * deltaTime;
-        transform.rotation *= Quaternion.Euler(0, rotationSpeed * deltaTime, 0);
+        rb.linearVelocity = transform.forward * movementSpeed;
+        rb.angularVelocity = new Vector3(0, rotationSpeed, 0);
+
+        prevMovementSpeed = movementSpeed;
+        prevRotationSpeed = rotationSpeed;
 
     }
 }
