@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 6753129176845312427}
   - component: {fileID: 3082496214608484800}
   - component: {fileID: 2442566211649072230}
+  - component: {fileID: 4278470993324445963}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -312,6 +313,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &4278470993324445963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869552782347688764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7d875e870616f42a09d075060d9b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkyboxController
+  skyboxDark: {fileID: 2800000, guid: 1858ab16e99ba794fbdcb82a48887ec2, type: 3}
+  skyboxBlue: {fileID: 2800000, guid: 1f9b83872c3c88448bb7a4c63ba249bf, type: 3}
+  skyboxGreen: {fileID: 2800000, guid: 9906d4a68d8bcae438e7dad256c86672, type: 3}
+  skyboxPink: {fileID: 2800000, guid: fea906c9b1ce60b48be57f6b334a9e60, type: 3}
+  material: {fileID: 2100000, guid: 5767812a6dd92a242b153b750c8da929, type: 2}
+  skyboxDarkStart: 1
+  skyboxDarkEnd: 200
+  skyboxBlueStart: 400
+  skyboxBlueEnd: 627
+  skyboxGreenStart: 889
+  skyboxGreenEnd: 1150
+  skyboxPinkStart: 1259
+  skyboxPinkEnd: 1651
 --- !u!1 &5770366854857148037
 GameObject:
   m_ObjectHideFlags: 0

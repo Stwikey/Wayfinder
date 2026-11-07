@@ -210,7 +210,6 @@ public class StoryManager : MonoBehaviour {
                 UpdateStoryStep(StoryStep.DoorOpen);
             }
         }
-
     }
 
     // used on changing the storystep
