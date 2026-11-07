@@ -46,6 +46,16 @@ public class StoryManager : MonoBehaviour {
 
     public int puzzleCount = 0;
 
+    public GameObject TitleCam;
+    public GameObject Constellation1Cam;
+    public GameObject TinyStars1Cam;
+    public GameObject Constellation2Cam;
+    public GameObject TinyStars2Cam;
+    public GameObject Constellation3Cam;
+    public GameObject TinyStars3Cam;
+    public GameObject Constellation4Cam;
+    public GameObject Rune1Cam;
+
     public GameObject StartTitleUI;
     public GameObject ClickAnywhereToBeginUI;
 
@@ -142,10 +152,12 @@ public class StoryManager : MonoBehaviour {
 
         if (currentStoryStep == StoryStep.FishingWASDEnter) {
             if (GameManager.gameState == GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDMove);
+            if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
         }
 
         if (currentStoryStep == StoryStep.FishingWASDMove) {
             if (GameManager.gameState != GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDEnter);
+            if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
             if (FishingGameplay.I().isFishing && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow)) {
                 UpdateStoryStep(StoryStep.ReachFirstRune);
             }
@@ -207,8 +219,8 @@ public class StoryManager : MonoBehaviour {
         if (storyStep == StoryStep.StartGame) {
             cam.SaveValues();
             ClickAnywhereToBeginUI.SetActive(true);
-            Camera.main.transform.position = new Vector3(-10.36454f, 74.9f, 78.3f);
-            Camera.main.transform.rotation = Quaternion.Euler(-5.772f, -3.754f, -0.376f);
+            Camera.main.transform.position = TitleCam.transform.position;
+            Camera.main.transform.rotation = TitleCam.transform.rotation;
 
             cam.cameraState = CameraState.Stationary;
         }
@@ -218,8 +230,8 @@ public class StoryManager : MonoBehaviour {
         else StartTitleUI.SetActive(false);
 
         if (storyStep == StoryStep.StartGamePanCamera) {
-            Camera.main.GetComponent<CameraMovement>().cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 4, 0));
-            Camera.main.GetComponent<CameraMovement>().StartPanning();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 4, 0));
+            cam.StartPanning();
         }
 
         if (storyStep == StoryStep.ZoomCamera) ZoomUI.SetActive(true);
@@ -239,8 +251,8 @@ public class StoryManager : MonoBehaviour {
             Barrier1.SetActive(false);
             Constellation1.SetActive(true);
             cam.SaveValues();
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-3.2999f,20f,37.5f), new Vector3(90f,26.448f,0f), 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-4.69991f,12.600f,39f), new Vector3(25.344f,46.6733f,-9.447f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation1Cam.transform.position, Constellation1Cam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(TinyStars1Cam.transform.position, TinyStars1Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
@@ -253,7 +265,7 @@ public class StoryManager : MonoBehaviour {
 
         if (storyStep == StoryStep.Puzzle1) {
             cam.SaveValues();
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(156.19f,4.099f,173.69f), new Vector3(15.81f,0f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Rune1Cam.transform.position, Rune1Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
         }
@@ -262,8 +274,8 @@ public class StoryManager : MonoBehaviour {
             Tinystars2.SetActive(true);
             Constellation2.SetActive(true);
             cam.SaveValues();
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(155.300f,15f,199.600f), new Vector3(90f,0f,0f), 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(156.60f,12.60f,199.5f), new Vector3(7.524f,0,0), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation2Cam.transform.position, Constellation2Cam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(TinyStars2Cam.transform.position, TinyStars2Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
         }
@@ -272,7 +284,7 @@ public class StoryManager : MonoBehaviour {
             Tinystars3.SetActive(true);
             Constellation3.SetActive(true);
             cam.SaveValues();
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(51.90f,13f,512.29f), new Vector3(90f,347.93f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation3Cam.transform.position, Constellation3Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
         }
@@ -280,7 +292,7 @@ public class StoryManager : MonoBehaviour {
         if (storyStep == StoryStep.AfterConstellation4) {
             Constellation4.SetActive(true);
             cam.SaveValues();
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-16f,20f,1059f), new Vector3(90f,3.58f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
         }
