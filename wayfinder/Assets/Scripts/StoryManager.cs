@@ -4,12 +4,25 @@ public enum StoryStep {
     StartGame,
     StartGameAnimation,
     StartGamePanCamera,
-    WASDMovement,
     ZoomCamera,
+    WASDMovement,
     ReachFishing,
     FishingEnter,
     Fishing,
-    FishingWASD,
+    Catch1,
+    AfterConstellation1,
+    FishingWASDEnter,
+    FishingWASDFish,
+    FishingWASDMove,
+    ReachFirstRune,
+    Puzzle1,
+    AfterConstellation2,
+    ReachSecondRune,
+    Puzzle5,
+    AfterConstellation3,
+    ReachThirdRune,
+    Puzzle9,
+    AfterConstellation4,
     DoorOpen,
 };
 
@@ -31,16 +44,46 @@ public class StoryManager : MonoBehaviour {
         return _instance;
     }
 
+    public int puzzleCount = 0;
+
     public GameObject StartTitleUI;
     public GameObject ClickAnywhereToBeginUI;
 
+    public GameObject ZoomUI;
+
     public GameObject WASDMovementUI;
+
+    public GameObject ReachFishingObj;
+
+    public GameObject FishingEnterUI;
     public GameObject FishingUI;
-    public GameObject FishingWASDUI; 
+    public GameObject FishingWASDUI;
+
+    public GameObject Catch1;
+    public GameObject Constellation1;
+    public GameObject Barrier1;
+    public GameObject Tinystars1;
+
+    public GameObject FishingWASDEnterUI;
+    public GameObject FishingWASDFishUI;
+
+    public GameObject ReachFirstRune;
+    public GameObject Constellation2;
+    public GameObject Tinystars2;
+
+    public GameObject ReachSecondRune;
+    public GameObject Constellation3;
+    public GameObject Tinystars3;
+    
+    public GameObject ReachThirdRune;
+    public GameObject Constellation4;
 
     public StoryStep currentStoryStep;
 
+    CameraMovement cam;
+
     void Start() {
+        cam = Camera.main.GetComponent<CameraMovement>();
         UpdateStoryStep(currentStoryStep);
     }
 
@@ -57,13 +100,13 @@ public class StoryManager : MonoBehaviour {
         }
 
         if (currentStoryStep == StoryStep.StartGamePanCamera) {
-            if (Camera.main.GetComponent<CameraMovement>().cameraState != CameraState.Panning) {
+            if (cam.cameraState != CameraState.Panning) {
                 UpdateStoryStep(StoryStep.ZoomCamera);
             }
         }
 
         if (currentStoryStep == StoryStep.ZoomCamera) {
-            if (Mathf.Abs(Input.mouseScrollDelta.y) > 0.01f) {
+            if (Mathf.Abs(Input.mouseScrollDelta.y) > 0.1f) {
                 UpdateStoryStep(StoryStep.WASDMovement);
             }
         }
@@ -72,24 +115,102 @@ public class StoryManager : MonoBehaviour {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow)) UpdateStoryStep(StoryStep.ReachFishing);
         }
 
+        if (currentStoryStep == StoryStep.ReachFishing) {
+            if (ReachFishingObj.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.FishingEnter);
+        }
+
         if (currentStoryStep == StoryStep.FishingEnter) {
             if (GameManager.gameState == GameState.Fishing) UpdateStoryStep(StoryStep.Fishing);
         }
 
         if (currentStoryStep == StoryStep.Fishing) {
             if (GameManager.gameState != GameState.Fishing) UpdateStoryStep(StoryStep.FishingEnter);
+            if (Input.GetMouseButtonDown(0)) {
+                UpdateStoryStep(StoryStep.Catch1);
+            }
         }
+
+        if (currentStoryStep == StoryStep.Catch1) {
+            if (Catch1.GetComponent<FishingSpot>().collected) UpdateStoryStep(StoryStep.AfterConstellation1);
+        }
+
+        if (currentStoryStep == StoryStep.AfterConstellation1) {
+            if (cam.cameraState != CameraState.Panning) {
+                UpdateStoryStep(StoryStep.FishingWASDEnter);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.FishingWASDEnter) {
+            if (GameManager.gameState == GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDMove);
+        }
+
+        if (currentStoryStep == StoryStep.FishingWASDMove) {
+            if (GameManager.gameState != GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDEnter);
+            if (FishingGameplay.I().isFishing && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow)) {
+                UpdateStoryStep(StoryStep.ReachFirstRune);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.ReachFirstRune) {
+            if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
+        }
+
+        if (currentStoryStep == StoryStep.Puzzle1) {
+            if (puzzleCount == 1) {
+                UpdateStoryStep(StoryStep.AfterConstellation2);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.AfterConstellation2) {
+            if (cam.cameraState != CameraState.Panning) {
+                UpdateStoryStep(StoryStep.ReachSecondRune);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.ReachSecondRune) {
+            if (ReachSecondRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle5);
+        }
+
+        if (currentStoryStep == StoryStep.Puzzle5) {
+            if (puzzleCount == 5) {
+                UpdateStoryStep(StoryStep.AfterConstellation3);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.AfterConstellation3) {
+            if (cam.cameraState != CameraState.Panning) {
+                UpdateStoryStep(StoryStep.ReachThirdRune);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.ReachThirdRune) {
+            if (ReachThirdRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle9);
+        }
+
+        if (currentStoryStep == StoryStep.Puzzle9) {
+            if (puzzleCount == 9) {
+                UpdateStoryStep(StoryStep.AfterConstellation4);
+            }
+        }
+
+        if (currentStoryStep == StoryStep.AfterConstellation3) {
+            if (cam.cameraState != CameraState.Panning) {
+                UpdateStoryStep(StoryStep.DoorOpen);
+            }
+        }
+
     }
 
     // used on changing the storystep
     public void UpdateStoryStep(StoryStep storyStep) {
 
         if (storyStep == StoryStep.StartGame) {
+            cam.SaveValues();
             ClickAnywhereToBeginUI.SetActive(true);
             Camera.main.transform.position = new Vector3(-10.36454f, 74.9f, 78.3f);
             Camera.main.transform.rotation = Quaternion.Euler(-5.772f, -3.754f, -0.376f);
 
-            Camera.main.GetComponent<CameraMovement>().cameraState = CameraState.Stationary;
+            cam.cameraState = CameraState.Stationary;
         }
         else ClickAnywhereToBeginUI.SetActive(false);
 
@@ -97,18 +218,72 @@ public class StoryManager : MonoBehaviour {
         else StartTitleUI.SetActive(false);
 
         if (storyStep == StoryStep.StartGamePanCamera) {
-            Camera.main.GetComponent<CameraMovement>().cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-10.3645372f, 34.6417847f, -32.184639f), new Vector3(50.0000114f, 14.74617f, 359.623962f), 4, 0));
+            Camera.main.GetComponent<CameraMovement>().cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 4, 0));
             Camera.main.GetComponent<CameraMovement>().StartPanning();
         }
+
+        if (storyStep == StoryStep.ZoomCamera) ZoomUI.SetActive(true);
+        else ZoomUI.SetActive(false);
 
         if (storyStep == StoryStep.WASDMovement) WASDMovementUI.SetActive(true);
         else WASDMovementUI.SetActive(false);
 
+        if (storyStep == StoryStep.FishingEnter) FishingEnterUI.SetActive(true);
+        else FishingEnterUI.SetActive(false);
+
         if (storyStep == StoryStep.Fishing) FishingUI.SetActive(true);
         else FishingUI.SetActive(false);
 
-        if (storyStep == StoryStep.FishingWASD) FishingWASDUI.SetActive(true);
-        else FishingWASDUI.SetActive(false);
+        if (storyStep == StoryStep.AfterConstellation1) {
+            Tinystars1.SetActive(true);
+            Barrier1.SetActive(false);
+            Constellation1.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-3.2999f,20f,37.5f), new Vector3(90f,26.448f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-4.69991f,12.600f,39f), new Vector3(25.344f,46.6733f,-9.447f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
+            cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.FishingWASDEnter) FishingWASDEnterUI.SetActive(true);
+        else FishingWASDEnterUI.SetActive(false);
+
+        if (storyStep == StoryStep.FishingWASDFish) FishingWASDFishUI.SetActive(true);
+        else FishingWASDFishUI.SetActive(false);
+
+        if (storyStep == StoryStep.Puzzle1) {
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(156.19f,4.099f,173.69f), new Vector3(15.81f,0f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.AfterConstellation2) {
+            Tinystars2.SetActive(true);
+            Constellation2.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(155.300f,15f,199.600f), new Vector3(90f,0f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(156.60f,12.60f,199.5f), new Vector3(7.524f,0,0), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.AfterConstellation3) {
+            Tinystars3.SetActive(true);
+            Constellation3.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(51.90f,13f,512.29f), new Vector3(90f,347.93f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.AfterConstellation4) {
+            Constellation4.SetActive(true);
+            cam.SaveValues();
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(new Vector3(-16f,20f,1059f), new Vector3(90f,3.58f,0f), 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.StartPanning();
+        }
 
         currentStoryStep = storyStep;
 

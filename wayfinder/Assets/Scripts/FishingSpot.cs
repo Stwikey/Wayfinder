@@ -7,6 +7,8 @@ public class FishingSpot : MonoBehaviour {
 
     Vector3 starPosition;
 
+    public bool collected = false;
+
     void Start() {
         starPosition = star.transform.position;
     }
@@ -22,5 +24,6 @@ public class FishingSpot : MonoBehaviour {
     
     public void Collect() {
         star.SetActive(false);
+        collected = true;
     }
 }

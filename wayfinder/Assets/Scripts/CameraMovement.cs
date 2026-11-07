@@ -42,8 +42,11 @@ public class CameraMovement : MonoBehaviour {
 
     public List<CameraPanningMovement> cameraPanningMovement;
 
+    public Vector3 lastPosition;
+    public Vector3 lastRotation;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void Awake() {
         distance = (transform.position - followingObj.transform.position).magnitude;
         rotation = transform.rotation.eulerAngles;
     }
@@ -56,7 +59,6 @@ public class CameraMovement : MonoBehaviour {
         float mouseScroll = Input.mouseScrollDelta.y;
         Vector3 mouseDeltaRaw = Input.mousePositionDelta;
         Vector3 mouseDelta = new Vector3(-mouseDeltaRaw.y, mouseDeltaRaw.x, 0.0f);
-
         distance += -mouseScroll * zoomSpeed;
         distance = Mathf.Max(Mathf.Min(distance, maxDistance), minDistance);
 
@@ -99,16 +101,19 @@ public class CameraMovement : MonoBehaviour {
             transform.rotation = Quaternion.Euler(Vector3.Lerp(originalRotation, newRotation, fraction));
 
             // start waiting
-            if (panningElapsedTime == cameraPanningMovement[panningIdx].time) {
+            if (fraction >= 0.999f) {
                 panningElapsedTime = 0;
                 panning = false;
             }
+
+            //Debug.Log(panningIdx);
         }
         else {
             if (panningElapsedTime > cameraPanningMovement[panningIdx].waitTime) {
                 if (panningIdx == cameraPanningMovement.Count - 1) {
                     cameraState = CameraState.Controllable;
                     cameraPanningMovement = new List<CameraPanningMovement>();
+                    panningIdx = 0;
                 }
                 else {
                     panningIdx++;
@@ -124,7 +129,6 @@ public class CameraMovement : MonoBehaviour {
     }
 
     void SetupPanning(int idx) {
-        panningIdx = 0;
         panningElapsedTime = 0;
         panning = true;
 
@@ -174,6 +178,10 @@ public class CameraMovement : MonoBehaviour {
             }
             else break;
         }
-        
+    }
+
+    public void SaveValues() {
+        lastPosition = transform.position;
+        lastRotation = transform.rotation.eulerAngles;
     }
 }

@@ -226,12 +226,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579b6c495639ab44c83b5d93e2353dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoatMovement
-  acceleration: 10
-  deacceleration: 20
-  maxSpeed: 10
-  rotationAcceleration: 30
-  rotationDeacceleration: 60
-  maxRotationSpeed: 30
+  acceleration: 15
+  deacceleration: 30
+  maxSpeed: 15
+  rotationAcceleration: 45
+  rotationDeacceleration: 90
+  maxRotationSpeed: 45
 --- !u!114 &1722417087466159751
 MonoBehaviour:
   m_ObjectHideFlags: 0

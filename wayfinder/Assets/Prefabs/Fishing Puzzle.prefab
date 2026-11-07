@@ -47,6 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishingZone
   points:
   - {fileID: 0}
+  Rune: {fileID: 0}
+  GlowingMaterial: {fileID: 2100000, guid: d06ef442caafe469085614b6b9ced5c7, type: 2}
+  glowingIdx: 0
 --- !u!1 &6290653563992375560
 GameObject:
   m_ObjectHideFlags: 0

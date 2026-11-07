@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
   followingObj: {fileID: 0}
-  maxDistance: 20
+  maxDistance: 35
   minDistance: 10
   distance: 12
   zoomSpeed: 2
@@ -159,3 +159,5 @@ MonoBehaviour:
   maxRotationX: 50
   rotateSpeed: 0.2
   rotation: {x: 9, y: 0, z: 0}
+  cameraState: 1
+  cameraPanningMovement: []

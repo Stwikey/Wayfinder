@@ -35,7 +35,7 @@ public class FishingGameplay : MonoBehaviour {
 
     public Animator animator;
     GameObject currentLine;
-    bool isFishing = false;
+    public bool isFishing = false;
     GameObject fishingZone;
     FishingLine fishingLine;
     
@@ -82,12 +82,12 @@ public class FishingGameplay : MonoBehaviour {
         RaycastHit[] rayHits = Physics.RaycastAll(ray);
 
         // if we hit something that is not a fish
-        for (int i = 0; i < rayHits.Length; i++) {
-            if (rayHits[i].collider.tag != "FishingZone" && rayHits[i].collider.tag != "SmallFish" && rayHits[i].collider.tag != "PuzzleFish" && rayHits[i].collider.tag != "Water") {
-                StopFishing();
-                return;
-            }
-        }
+        // for (int i = 0; i < rayHits.Length; i++) {
+        //     if (rayHits[i].collider.tag != "FishingZone" && rayHits[i].collider.tag != "SmallFish" && rayHits[i].collider.tag != "PuzzleFish" && rayHits[i].collider.tag != "Water") {
+        //         StopFishing();
+        //         return;
+        //     }
+        // }
 
         // figure out if it is in the zone or not
         FishingType currentType = FishingType.General;
