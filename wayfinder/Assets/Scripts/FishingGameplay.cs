@@ -47,21 +47,34 @@ public class FishingGameplay : MonoBehaviour {
 
     void Update() {
 
-        if (GameManager.gameState != GameState.Movement) return;
-
         Vector3 mousePos = Input.mousePosition;
         bool rightMouse = Input.GetMouseButton(1);
         bool rightmouseDown = Input.GetMouseButtonDown(1);
         bool rightmouseUp = Input.GetMouseButtonUp(1);
 
-
-        // stopping fishing
-        if (rightmouseUp) {
+        // exit fishing
+        if (GameManager.gameState == GameState.Fishing && rightmouseDown) {
             StopFishing();
             return;
         }
 
-        if (!rightmouseDown && !isFishing) {
+        // enter fishing
+        if (GameManager.gameState == GameState.Movement) {
+            if (rightmouseDown) GameManager.gameState = GameState.Fishing;
+        }
+
+        // not in fishing
+        if (GameManager.gameState != GameState.Fishing) {
+            StopFishing();
+            return;
+        }
+
+        bool leftMouse = Input.GetMouseButton(0);
+        bool leftmouseDown = Input.GetMouseButtonDown(0);
+        bool leftmouseUp = Input.GetMouseButtonUp(0);
+
+        if (isFishing && leftmouseUp) {
+            StopFishing();
             return;
         }
 
@@ -71,7 +84,6 @@ public class FishingGameplay : MonoBehaviour {
         // if we hit something that is not a fish
         for (int i = 0; i < rayHits.Length; i++) {
             if (rayHits[i].collider.tag != "FishingZone" && rayHits[i].collider.tag != "SmallFish" && rayHits[i].collider.tag != "PuzzleFish" && rayHits[i].collider.tag != "Water") {
-                Debug.Log(rayHits[i].collider.tag);
                 StopFishing();
                 return;
             }
@@ -95,20 +107,22 @@ public class FishingGameplay : MonoBehaviour {
             }
         }
 
-        // if out of range
-        if ((hitpos - transform.position).magnitude > fishingRange) {
-            StopFishing();
-            return;
+        float distance = (new Vector3(hitpos.x - transform.position.x, 0, hitpos.z - transform.position.z)).magnitude;
+
+        // if out of range just don't update
+        if (distance > fishingRange) {
+            if (leftmouseDown) return;
+            hitpos = new Vector3(hitpos.x * (fishingRange / distance), hitpos.y, hitpos.z * (fishingRange / distance));
         }
 
         // start fishing
-        if (rightmouseDown) {
+        if (leftmouseDown) {
             // setting the type
             fishingType = currentType;
             StartFishing();
         }
         
-        if (rightMouse && isFishing) {
+        if (leftMouse && isFishing) {
             // if we change from zone to puzzle or puzzle to zone
             if (fishingType != currentType) {
                 StopFishing();
@@ -133,7 +147,9 @@ public class FishingGameplay : MonoBehaviour {
     }
 
     public void StopFishing() {
-        if (isFishing) animator.SetTrigger("Catch Rod");
+        if (!isFishing) return;
+        
+        animator.SetTrigger("Catch Rod");
         isFishing = false;
         fishingLine.UpdateFishingState(FishingLineState.Back);
         if (currentLine != null) {
@@ -143,6 +159,8 @@ public class FishingGameplay : MonoBehaviour {
                 currentLine.GetComponent<FishDrawing>().CollectFishes();
             }
         }
+
+        GameManager.gameState = GameState.Movement;
     }
 
     void StartFishing() {

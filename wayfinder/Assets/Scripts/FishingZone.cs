@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public class FishingZone : MonoBehaviour {
 
     public List<GameObject> points;
-
-    int idx = 0;
+    
+    List<GameObject> currentOrder;
 
     void Start() {
-        
+        currentOrder = new List<GameObject>();
     }
 
     void Update() {
@@ -16,29 +16,28 @@ public class FishingZone : MonoBehaviour {
     }
 
     public void FinishedTrail() {
-        if (idx != points.Count) {
-            for (int i = 0; i < points.Count; i++) {
-                points[i].GetComponent<FishingSpot>().Reset();
-            }
-            idx = 0;
-        }
+        bool completed = true;
+        if (currentOrder.Count != points.Count) completed = false;
         else {
             for (int i = 0; i < points.Count; i++) {
-                points[i].GetComponent<FishingSpot>().Collect();
+                if (points[i] != currentOrder[i]) completed = false;
             }
         }
+        
+        for (int i = 0; i < points.Count; i++) {
+            if (completed) points[i].GetComponent<FishingSpot>().Collect();
+            else {
+                points[i].GetComponent<FishingSpot>().Reset();
+            }
+        }
+        currentOrder = new List<GameObject>();
     }
 
     public void CaughtFish(GameObject hitFish) {
 
         for (int i = 0; i < points.Count; i++) {
             if (hitFish == points[i]) {
-                if (i == idx) idx++;
-                // wrong point, reset
-                else {
-                    FishingGameplay.I().StopFishing();
-                    FinishedTrail();
-                }
+                currentOrder.Add(points[i]);
             }
         }
 

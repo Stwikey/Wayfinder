@@ -19,7 +19,7 @@ public class CameraMovement : MonoBehaviour {
     public float rotateSpeed;
     public Vector3 rotation;
 
-    public CameraState cameraState = CameraState.OnlyFollowing;
+    public CameraState cameraState = CameraState.Controllable;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -30,6 +30,7 @@ public class CameraMovement : MonoBehaviour {
     void Update() {
 
         if (cameraState != CameraState.Controllable) return;
+        if (GameManager.gameState != GameState.Movement) return;
 
         float mouseScroll = Input.mouseScrollDelta.y;
         Vector3 mouseDeltaRaw = Input.mousePositionDelta;
