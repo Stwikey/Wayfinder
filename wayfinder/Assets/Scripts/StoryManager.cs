@@ -13,7 +13,6 @@ public enum StoryStep {
     AfterConstellation1,
     FishingWASDEnter,
     FishingWASDFish,
-    FishingWASDMove,
     ReachFirstRune,
     Puzzle1,
     Catch2,
@@ -170,11 +169,11 @@ public class StoryManager : MonoBehaviour {
         }
 
         if (currentStoryStep == StoryStep.FishingWASDEnter) {
-            if (GameManager.gameState == GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDMove);
+            if (GameManager.gameState == GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDFish);
             if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
         }
 
-        if (currentStoryStep == StoryStep.FishingWASDMove) {
+        if (currentStoryStep == StoryStep.FishingWASDFish) {
             if (GameManager.gameState != GameState.Fishing) UpdateStoryStep(StoryStep.FishingWASDEnter);
             if (ReachFirstRune.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Puzzle1);
             if (FishingGameplay.I().isFishing && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow))) {
@@ -275,13 +274,16 @@ public class StoryManager : MonoBehaviour {
             cam.StartPanning();
         }
 
-        if (storyStep == StoryStep.ZoomCamera) {
-            ZoomUI.SetActive(true);
+        // if (storyStep == StoryStep.ZoomCamera) {
+        //     ZoomUI.SetActive(true);
+        //     Compass.SetActive(true);
+        // }
+        // else ZoomUI.SetActive(false);
+
+        if (storyStep == StoryStep.WASDMovement) {
+            WASDMovementUI.SetActive(true);
             Compass.SetActive(true);
         }
-        else ZoomUI.SetActive(false);
-
-        if (storyStep == StoryStep.WASDMovement) WASDMovementUI.SetActive(true);
         else WASDMovementUI.SetActive(false);
 
         if (storyStep == StoryStep.FishingEnter) FishingEnterUI.SetActive(true);

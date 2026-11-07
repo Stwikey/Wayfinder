@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4163039783713581447}
   - component: {fileID: 8127429148110655487}
   - component: {fileID: 5165896506494072800}
-  - component: {fileID: 5113789746543553428}
+  - component: {fileID: 8647864023054541683}
   m_Layer: 0
   m_Name: Island
   m_TagString: Untagged
@@ -91,8 +91,8 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5113789746543553428
-BoxCollider:
+--- !u!64 &8647864023054541683
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,6 +109,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.37830418, y: 0.36023206, z: 0.036012206}
-  m_Center: {x: -0.000000014901161, y: 5.1274695e-16, z: 0.018040678}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4493585093827132993, guid: a3f2f00b71bab4df6a4b5c1c3973b6f2, type: 3}
