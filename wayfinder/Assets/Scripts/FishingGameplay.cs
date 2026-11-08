@@ -149,6 +149,8 @@ public class FishingGameplay : MonoBehaviour {
     }
 
     public void StopFishing() {
+        if (GameManager.gameState == GameState.Fishing) GameManager.gameState = GameState.Movement;
+
         if (!isFishing) return;
         
         animator.SetTrigger("Catch Rod");
@@ -161,8 +163,6 @@ public class FishingGameplay : MonoBehaviour {
                 currentLine.GetComponent<FishDrawing>().CollectFishes();
             }
         }
-
-        GameManager.gameState = GameState.Movement;
     }
 
     void StartFishing() {
