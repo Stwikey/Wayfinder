@@ -21,6 +21,7 @@ public class FishingSpot : MonoBehaviour {
     }
 
     public void Caught() {
+        AudioManager.I().PlaySFX(AudioType.Star2);
         ripple.SetActive(false);
     }
     

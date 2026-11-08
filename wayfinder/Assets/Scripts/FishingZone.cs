@@ -40,6 +40,7 @@ public class FishingZone : MonoBehaviour {
             mats[glowingIdx] = GlowingMaterial;
             Rune.GetComponent<MeshRenderer>().materials = mats;
             StoryManager.I().puzzleCount++;
+            AudioManager.I().PlaySFX(AudioType.Chime);
             gameObject.SetActive(false);
         }
 

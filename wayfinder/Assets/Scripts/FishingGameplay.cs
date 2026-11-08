@@ -166,6 +166,7 @@ public class FishingGameplay : MonoBehaviour {
     }
 
     void StartFishing() {
+        AudioManager.I().PlaySFX(AudioType.Ripple);
         animator.SetTrigger("Cast Rod");
         fishingLine.UpdateFishingState(FishingLineState.Cast);
         isFishing = true;

@@ -98,6 +98,10 @@ public class BoatMovement : MonoBehaviour {
             }
         }
 
+        if (Mathf.Abs(prevMovementSpeed) <= Mathf.Abs(movementSpeed) && Mathf.Abs(movementSpeed) > 0.01f) AudioManager.I().PlaySFX(AudioType.Sloshing, true);
+        
+        if (Mathf.Abs(movementSpeed) <= 0.01f) AudioManager.I().StopSFX(AudioType.Sloshing);
+
         rb.linearVelocity = transform.forward * movementSpeed;
         rb.angularVelocity = new Vector3(0, rotationSpeed, 0);
 

@@ -106,6 +106,8 @@ public class StoryManager : MonoBehaviour {
 
     public GameObject Compass;
 
+    public GameObject EndingObj;
+
     public StoryStep currentStoryStep;
 
     CameraMovement cam;
@@ -246,6 +248,7 @@ public class StoryManager : MonoBehaviour {
         if (currentStoryStep == StoryStep.ReachDoor) {
             if (ReachDoor.GetComponent<InteractionCheckpoint>().interacted) {
                 doorAnimator.SetTrigger("Open Door");
+                AudioManager.I().PlaySFX(AudioType.Gateway);
                 UpdateStoryStep(StoryStep.ReachCompass);
             }
         }
@@ -257,6 +260,7 @@ public class StoryManager : MonoBehaviour {
         if (currentStoryStep == StoryStep.Finished) {
             if (cam.cameraState != CameraState.Panning) {
                 cam.cameraState = CameraState.Stationary;
+                EndingObj.SetActive(true);
             }
         }
     }

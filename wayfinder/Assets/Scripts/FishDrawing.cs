@@ -89,6 +89,7 @@ public class FishDrawing : MonoBehaviour {
     }
 
     public void CollectFishes() {
+        if (fishes.Count > 1) AudioManager.I().PlaySFX(AudioType.StarObtain);
         for (int i = 1; i < fishes.Count; i++) {
             fishes[i].transform.parent.gameObject.GetComponent<FishingSpot>().Collect();
         }
