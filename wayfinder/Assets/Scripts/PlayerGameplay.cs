@@ -11,7 +11,13 @@ public class PlayerGameplay : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape) && GameManager.gameState == GameState.Movement) {
             GameManager.gameState = GameState.Settings;
         }
-        if (GameManager.gameState == GameState.Fishing || GameManager.gameState == GameState.Settings) Cursor.visible = true;
-        else Cursor.visible = false;
+        if (GameManager.gameState == GameState.Fishing || GameManager.gameState == GameState.Settings) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }
