@@ -323,7 +323,7 @@ public class StoryManager : MonoBehaviour {
         if (storyStep == StoryStep.Puzzle1) {
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Rune1Cam.transform.position, Rune1Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -331,7 +331,7 @@ public class StoryManager : MonoBehaviour {
             Catch2.SetActive(true);
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation2Cam.transform.position, Constellation2Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -342,7 +342,7 @@ public class StoryManager : MonoBehaviour {
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation2Cam.transform.position, Constellation2Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(TinyStars2Cam.transform.position, TinyStars2Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -350,7 +350,7 @@ public class StoryManager : MonoBehaviour {
             Catch3.SetActive(true);
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation3Cam.transform.position, Constellation3Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -360,7 +360,7 @@ public class StoryManager : MonoBehaviour {
             Constellation3.GetComponent<FadeIn>().fadingIn = true;
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation3Cam.transform.position, Constellation3Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -368,7 +368,7 @@ public class StoryManager : MonoBehaviour {
             Catch4.SetActive(true);
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -376,7 +376,7 @@ public class StoryManager : MonoBehaviour {
             Constellation4.GetComponent<FadeIn>().fadingIn = true;
             cam.SaveValues();
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 0.1f));
             cam.StartPanning();
         }
 
@@ -385,7 +385,8 @@ public class StoryManager : MonoBehaviour {
         }
 
         if (storyStep == StoryStep.Finished) {
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(EndingCam.transform.position, EndingCam.transform.rotation.eulerAngles, 2, 2));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(EndingCam.transform.position, EndingCam.transform.rotation.eulerAngles, 2, 0.1f));
+            cam.StartPanning();
         }
 
         currentStoryStep = storyStep;
