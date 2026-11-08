@@ -32,8 +32,18 @@ public class BoatMovement : MonoBehaviour {
     float prevMovementSpeed = 0.0f;
 
     void FixedUpdate() {
-        if (GameManager.gameState != GameState.Movement && GameManager.gameState != GameState.Fishing) return;
-        if (Camera.main.GetComponent<CameraMovement>().cameraState == CameraState.Panning) return;
+        if (GameManager.gameState != GameState.Movement && GameManager.gameState != GameState.Fishing) {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            prevRotationSpeed = 0.0f;
+            prevMovementSpeed = 0.0f;
+        }
+        if (Camera.main.GetComponent<CameraMovement>().cameraState == CameraState.Panning) {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            prevRotationSpeed = 0.0f;
+            prevMovementSpeed = 0.0f;
+        }
 
         float deltaTime = Time.deltaTime;
 

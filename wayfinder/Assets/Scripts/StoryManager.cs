@@ -59,6 +59,7 @@ public class StoryManager : MonoBehaviour {
     public GameObject TinyStars3Cam;
     public GameObject Constellation4Cam;
     public GameObject Rune1Cam;
+    public GameObject EndingCam;
 
     public GameObject StartTitleUI;
     public GameObject ClickAnywhereToBeginUI;
@@ -99,6 +100,7 @@ public class StoryManager : MonoBehaviour {
     public GameObject ReachDoor;
 
     public Animator doorAnimator;
+    public GameObject Islands;
     
     public GameObject ReachCompass;
 
@@ -251,6 +253,12 @@ public class StoryManager : MonoBehaviour {
         if (currentStoryStep == StoryStep.ReachCompass) {
             if (ReachCompass.GetComponent<InteractionCheckpoint>().interacted) UpdateStoryStep(StoryStep.Finished);
         }
+
+        if (currentStoryStep == StoryStep.Finished) {
+            if (cam.cameraState != CameraState.Panning) {
+                cam.cameraState = CameraState.Stationary;
+            }
+        }
     }
 
     // used on changing the storystep
@@ -367,6 +375,14 @@ public class StoryManager : MonoBehaviour {
             cam.cameraPanningMovement.Add(new CameraPanningMovement(Constellation4Cam.transform.position, Constellation4Cam.transform.rotation.eulerAngles, 2, 2));
             cam.cameraPanningMovement.Add(new CameraPanningMovement(cam.lastPosition, cam.lastRotation, 2, 2));
             cam.StartPanning();
+        }
+
+        if (storyStep == StoryStep.ReachCompass) {
+            Islands.SetActive(true);
+        }
+
+        if (storyStep == StoryStep.Finished) {
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(EndingCam.transform.position, EndingCam.transform.rotation.eulerAngles, 2, 2));
         }
 
         currentStoryStep = storyStep;
