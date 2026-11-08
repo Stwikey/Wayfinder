@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 1698020281788239944}
   - component: {fileID: 2688733310952712889}
   - component: {fileID: 8410640692557557802}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Total Area
   m_TagString: FishingZone
   m_Icon: {fileID: 0}

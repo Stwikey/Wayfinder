@@ -40,6 +40,7 @@ public class FishingZone : MonoBehaviour {
             mats[glowingIdx] = GlowingMaterial;
             Rune.GetComponent<MeshRenderer>().materials = mats;
             StoryManager.I().puzzleCount++;
+            gameObject.SetActive(false);
         }
 
         currentOrder = new List<GameObject>();
