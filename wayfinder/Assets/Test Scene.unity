@@ -85749,7 +85749,7 @@ MonoBehaviour:
   doorAnimator: {fileID: 2006353260}
   ReachCompass: {fileID: 746048629}
   Compass: {fileID: 323347680244313229}
-  currentStoryStep: 11
+  currentStoryStep: 0
 --- !u!1001 &8098166547625881968
 PrefabInstance:
   m_ObjectHideFlags: 0
