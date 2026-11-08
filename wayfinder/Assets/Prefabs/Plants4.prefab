@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 2318bf18badc8465181fb23f389b8b16, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 9d8d7158e2950c642aa3377118e5e5bf, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3577721132386661576, guid: 989b3e8dd1f12a2429611300d342e59b, type: 3}
     - target: {fileID: 919132149155446097, guid: 9d8d7158e2950c642aa3377118e5e5bf, type: 3}
       propertyPath: m_Name
       value: Plants4
