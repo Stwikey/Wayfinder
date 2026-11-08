@@ -125,6 +125,9 @@ public class CameraMovement : MonoBehaviour {
 
     public void StartPanning() {
         cameraState = CameraState.Panning;
+        if (GameManager.gameState == GameState.Fishing) {
+            FishingGameplay.I().StopFishing();
+        }
         SetupPanning(0);
     }
 
