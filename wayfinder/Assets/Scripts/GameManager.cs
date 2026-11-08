@@ -3,7 +3,8 @@ using UnityEngine;
 public enum GameState {
     Movement,
     Fishing,
-    CameraMovement
+    CameraMovement,
+    Settings
 };
 
 public class GameManager {
