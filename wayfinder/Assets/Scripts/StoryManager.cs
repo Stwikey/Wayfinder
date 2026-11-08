@@ -124,10 +124,9 @@ public class StoryManager : MonoBehaviour {
 
     void UpdateStory() {
         if (currentStoryStep == StoryStep.StartGame) {
-            if (Input.GetMouseButtonDown(0)) {
-                UpdateStoryStep(StoryStep.StartGameAnimation);
-                StartTitleUI.GetComponent<StartGameAnimation>().StartAnimation();
-            }
+            UpdateStoryStep(StoryStep.StartGameAnimation);
+            StartTitleUI.GetComponent<StartGameAnimation>().StartAnimation();
+            
         }
 
         if (currentStoryStep == StoryStep.StartGamePanCamera) {
