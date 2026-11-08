@@ -60,6 +60,7 @@ public class StoryManager : MonoBehaviour {
     public GameObject Constellation4Cam;
     public GameObject Rune1Cam;
     public GameObject EndingCam;
+    public GameObject WifeCompassCam;
 
     public GameObject StartTitleUI;
     public GameObject ClickAnywhereToBeginUI;
@@ -385,7 +386,8 @@ public class StoryManager : MonoBehaviour {
         }
 
         if (storyStep == StoryStep.Finished) {
-            cam.cameraPanningMovement.Add(new CameraPanningMovement(EndingCam.transform.position, EndingCam.transform.rotation.eulerAngles, 2, 0.1f));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(WifeCompassCam.transform.position, WifeCompassCam.transform.rotation.eulerAngles, 2, 2f));
+            cam.cameraPanningMovement.Add(new CameraPanningMovement(EndingCam.transform.position, EndingCam.transform.rotation.eulerAngles, 4, 0.1f));
             cam.StartPanning();
         }
 
